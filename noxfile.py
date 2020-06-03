@@ -106,7 +106,7 @@ def system(session):
 
     # Install all test dependencies, then install this package into the
     # virtualenv's dist-packages.
-    session.install("mock", "pytest")
+    session.install("mock", "pytest", "google-cloud-testutils")
 
     session.install("-e", ".")
 
@@ -154,11 +154,12 @@ def test(session, library):
     session.cd(library)
 
     unit(session)
-    # system tests are run on 2.7 and 3.7 only
+
+    # system tests are run on 3.7 only
     if session.python == "3.7":
-        if library == "pubsub":
+        if library == "python-pubsub":
             session.install("psutil")
-        if library == "storage":
+        if library == "python-storage":
             session.install(
                 "google-cloud-iam", "google-cloud-pubsub", "google-cloud-kms"
             )
