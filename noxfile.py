@@ -121,7 +121,7 @@ def system(session):
     if system_test_folder_exists:
         session.run("py.test", "--verbose", system_test_folder_path, *session.posargs)
 
-@nox.session(python=["2.7", "3.5", "3.6", "3.7", "3.8"])
+@nox.session(python=["3.6", "3.7", "3.8"])
 @nox.parametrize(
     "library",
     ["python-pubsub", "python-storage", "python-texttospeech"],
@@ -154,5 +154,5 @@ def test(session, library):
     session.cd(library)
     unit(session)
     # system tests are run on 2.7 and 3.7 only
-    if session.python == "2.7" or session.python == "3.7":
+    if session.python == "3.7":
         system(session)
