@@ -71,7 +71,6 @@ def default(session):
     session.run(
         "py.test",
         "--quiet",
-        "--cov=google.cloud.cloudasset",
         "--cov=google.cloud",
         "--cov=tests.unit",
         "--cov-append",
@@ -121,6 +120,7 @@ def system(session):
     if system_test_folder_exists:
         session.run("py.test", "--verbose", system_test_folder_path, *session.posargs)
 
+
 @nox.session(python=["3.6", "3.7", "3.8"])
 @nox.parametrize(
     "library",
@@ -151,8 +151,13 @@ def test(session, library):
             external=True,
         )
 
-    session.cd(library)
     unit(session)
     # system tests are run on 2.7 and 3.7 only
     if session.python == "3.7":
+        if library == "pubsub":
+            session.install("psutil")
+        if library == "storage":
+            session.install(
+                "google-cloud-iam", "google-cloud-pubsub", "google-cloud-kms"
+            )
         system(session)
