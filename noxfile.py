@@ -150,6 +150,8 @@ def test(session, library):
             f"https://github.com/googleapis/{library}",
             external=True,
         )
+    
+    session.cd(library)
 
     unit(session)
     # system tests are run on 2.7 and 3.7 only
