@@ -93,7 +93,7 @@ def system(session):
     system_test_path = os.path.join("tests", "system.py")
     system_test_folder_path = os.path.join("tests", "system")
     # Sanity check: Only run tests if the environment variable is set.
-    if not os.environ.get("FIRESTORE_APPLICATION_CREDENTIALS", ""):
+    if not os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", ""):
         session.skip("Credentials must be set via environment variable")
 
     system_test_exists = os.path.exists(system_test_path)
@@ -124,8 +124,8 @@ def system(session):
 @nox.session(python=["2.7", "3.5", "3.6", "3.7", "3.8"])
 @nox.parametrize(
     "library",
-    ["python-pubsub", "python-firestore", "python-storage", "python-texttospeech"],
-    ids=["pubsub", "firestore", "storage", "texttospeech"],
+    ["python-pubsub", "python-storage", "python-texttospeech"],
+    ids=["pubsub", "storage", "texttospeech"],
 )
 def test(session, library):
     """Run tests from a downstream libraries.
@@ -137,7 +137,6 @@ def test(session, library):
     They will need to be updated when the templates change.
 
     * Pub/Sub: GAPIC with handwritten layer.
-    * Firestore: GAPIC with handwritten layer.
     * Storage: Fully handwritten.
     * Text-to-Speech: Full GAPIC.
     """
