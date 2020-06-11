@@ -177,6 +177,13 @@ def generate_protos(session):
         "python", "-m", "grpc_tools.protoc", "--proto_path=.", "--grpc_python_out=.", *service_protos
     )
 
+    # More LRO non-standard fixes: rename the file and fix the import statement
+    operations_grpc_py = Path("google/longrunning/operations_pb2_grpc.py")
+    file_contents = operations_grpc_py.read_text()
+    file_contents = file_contents.replace("operations_pb2", "operations_proto_pb2")
+    operations_grpc_py.write_text(file_contents)
+    operations_grpc_py.replace("google/longrunning/operations_grpc_pb2.py")
+
     # Clean up LRO directory
     os.replace(
         "google/longrunning/operations_pb2.py",
