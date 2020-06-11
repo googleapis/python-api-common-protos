@@ -182,7 +182,6 @@ def generate_protos(session):
     file_contents = operations_grpc_py.read_text()
     file_contents = file_contents.replace("operations_pb2", "operations_proto_pb2")
     operations_grpc_py.write_text(file_contents)
-    operations_grpc_py.replace("google/longrunning/operations_grpc_pb2.py")
 
     # Clean up LRO directory
     os.replace(
