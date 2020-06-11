@@ -171,7 +171,7 @@ def generate_protos(session):
         "python", "-m", "grpc_tools.protoc", "--proto_path=.", "--python_out=.", *protos
     )
 
-    # Some files contain service definitions for which `_grpc_pb2.py` files must be generated.
+    # Some files contain service definitions for which `_pb2_grpc.py` files must be generated.
     service_protos = ["google/longrunning/operations.proto"]
     session.run(
         "python", "-m", "grpc_tools.protoc", "--proto_path=.", "--grpc_python_out=.", *service_protos
