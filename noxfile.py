@@ -114,7 +114,7 @@ def test(session, library):
     To verify that any changes we make here will not break downstream libraries, clone
     a few and run their unit and system tests.
 
-    NOTE: The unit and system test functions above are copied from the templates. 
+    NOTE: The unit and system test functions above are copied from the templates.
     They will need to be updated when the templates change.
 
     * Pub/Sub: GAPIC with handwritten layer.
@@ -148,12 +148,12 @@ def generate_protos(session):
     """Generates the protos using protoc.
 
     This session but be last to avoid overwriting the protos used in CI runs.
-    
+
     Some notes on the `google` directory:
-    1. The `_pb2.py` files are produced by protoc. 
+    1. The `_pb2.py` files are produced by protoc.
     2. The .proto files are non-functional but are left in the repository
        to make it easier to understand diffs.
-    3. The `google` directory also has `__init__.py` files to create proper modules. 
+    3. The `google` directory also has `__init__.py` files to create proper modules.
        If a new subdirectory is added, you will need to create more `__init__.py`
        files.
     """
@@ -169,6 +169,12 @@ def generate_protos(session):
     protos = [str(p) for p in (Path(".").glob("google/**/*.proto"))]
     session.run(
         "python", "-m", "grpc_tools.protoc", "--proto_path=.", "--python_out=.", *protos
+    )
+
+    # Some files contain service definitions for which `_grpc_pb2.py` files must be generated.
+    service_protos = ["google/longrunning/operations.proto"]
+    session.run(
+        "python", "-m", "grpc_tools.protoc", "--proto_path=.", "--grpc_python_out=.", *service_protos
     )
 
     # Clean up LRO directory
