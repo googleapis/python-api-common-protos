@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include README.rst LICENSE
+include README.md LICENSE
 recursive-include google *.json *.proto
 global-exclude *.py[co]
 global-exclude __pycache__
