@@ -11,21 +11,21 @@
       "git": {
         "name": "api-common-protos",
         "remote": "https://github.com/googleapis/api-common-protos.git",
-        "sha": "be41e82ef4af6406b4cf331af00a837f813c0c3b"
+        "sha": "c38ce7ea7ded7a79ca53024de96d154c3d8aad8c"
       }
     },
     {
       "git": {
         "name": "synthtool",
         "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "d91dd8aac77f7a9c5506c238038a26fa4f9e361e"
+        "sha": "fdd03c161003ab97657cc0218f25c82c89ddf4b6"
       }
     },
     {
       "git": {
         "name": "synthtool",
         "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "d91dd8aac77f7a9c5506c238038a26fa4f9e361e"
+        "sha": "fdd03c161003ab97657cc0218f25c82c89ddf4b6"
       }
     }
   ],
