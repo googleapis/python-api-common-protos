@@ -4,28 +4,28 @@
       "git": {
         "name": ".",
         "remote": "git@github.com:googleapis/python-api-common-protos",
-        "sha": "f3e2589fd93cb1585d70d91facfe2a618f68969a"
+        "sha": "1d72c877ef1ad6825fb57df1907f37b7f34c82cb"
       }
     },
     {
       "git": {
         "name": "api-common-protos",
         "remote": "https://github.com/googleapis/api-common-protos.git",
-        "sha": "be41e82ef4af6406b4cf331af00a837f813c0c3b"
+        "sha": "0fcae75a2c20a140137e3a9c48a87d15ceffabd7"
       }
     },
     {
       "git": {
         "name": "synthtool",
         "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "8b65daa222d193b689279162781baf0aa1f0ffd2"
+        "sha": "373861061648b5fe5e0ac4f8a38b32d639ee93e4"
       }
     },
     {
       "git": {
         "name": "synthtool",
         "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "8b65daa222d193b689279162781baf0aa1f0ffd2"
+        "sha": "373861061648b5fe5e0ac4f8a38b32d639ee93e4"
       }
     }
   ]
