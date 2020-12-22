@@ -44,6 +44,7 @@ common = gcp.CommonTemplates()
 templated_files = common.py_library()
 # TODO: use protoc-docs-plugin to add docstrings to protos
 s.move(templated_files / ".kokoro", excludes=["docs/**/*", "publish-docs.sh"])
+s.move(templated_files / "MANIFEST.in")
 s.move(templated_files / "setup.cfg")
 s.move(templated_files / "LICENSE")
 s.move(templated_files / ".github")
