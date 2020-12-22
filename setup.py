@@ -20,7 +20,7 @@ from setuptools import setup, find_packages
 
 name = "googleapis-common-protos"
 description = "Common protobufs used in Google APIs"
-version = "1.51.0"
+version = "1.52.0"
 release_status = "Development Status :: 5 - Production/Stable"
 dependencies = ["protobuf >= 3.6.0"]
 
@@ -57,6 +57,7 @@ setuptools.setup(
     extras_require=extras_require,
     license="Apache-2.0",
     packages=find_packages(),
+    package_data={"": ["*.proto"]},
     python_requires=">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*",
     namespace_packages=["google", "google.logging"],
     url="https://github.com/googleapis/python-api-common-protos",
