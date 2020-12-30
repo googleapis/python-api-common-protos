@@ -1,10 +1,20 @@
 # Changelog
 
+### [1.52.1](https://www.github.com/googleapis/python-api-common-protos/compare/v1.52.0...v1.52.1) (2020-12-30)
+
+
+### Bug Fixes
+
+* Generate gRPC files for long-running operations ([#13](https://www.github.com/googleapis/python-api-common-protos/issues/13)) ([a9ce288](https://www.github.com/googleapis/python-api-common-protos/commit/a9ce28840ddfec712da5b296f43e6c3131840db4)), closes [#12](https://www.github.com/googleapis/python-api-common-protos/issues/12)
+
+
+### Documentation
+
+* add link to PyPI ([#10](https://www.github.com/googleapis/python-api-common-protos/issues/10)) ([3f79402](https://www.github.com/googleapis/python-api-common-protos/commit/3f7940226b0e22aef31b82c8dc2196aa25b48a3f))
+
 ## 1.52.0 (2020-06-04)
 
 
 ### Features
 
 * create api-common-protos repo for python common protos ([4ef4b0d](https://www.github.com/googleapis/python-api-common-protos/commit/4ef4b0d177136bfbd19f4c00ccf2f6d7eaccb153))
-
-
