@@ -4,7 +4,7 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/python-api-common-protos.git",
-        "sha": "d7a3099cb04ac1d27e9fc04bb920d2025498b95e"
+        "sha": "5937fa9516f636afb6bf566ccb01096415e88c56"
       }
     },
     {
