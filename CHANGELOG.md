@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.53.0dev1](https://www.github.com/googleapis/python-api-common-protos/compare/v1.52.0...v1.53.0dev1) (2021-01-29)
+
+
+### Features
+
+* add `google.api.ResourceDescriptor.Style` ([4ce679c](https://www.github.com/googleapis/python-api-common-protos/commit/4ce679cd49771946bf781108e92e07cdf04a61eb))
+* require python >=3.6 and   ([#31](https://www.github.com/googleapis/python-api-common-protos/issues/31)) ([4ce679c](https://www.github.com/googleapis/python-api-common-protos/commit/4ce679cd49771946bf781108e92e07cdf04a61eb))
+
+
+### Bug Fixes
+
+* add `create_key` to FieldDescriptors ([4ce679c](https://www.github.com/googleapis/python-api-common-protos/commit/4ce679cd49771946bf781108e92e07cdf04a61eb))
+* Generate gRPC files for long-running operations ([#13](https://www.github.com/googleapis/python-api-common-protos/issues/13)) ([a9ce288](https://www.github.com/googleapis/python-api-common-protos/commit/a9ce28840ddfec712da5b296f43e6c3131840db4))
+
+
+### Documentation
+
+* add link to PyPI ([#10](https://www.github.com/googleapis/python-api-common-protos/issues/10)) ([3f79402](https://www.github.com/googleapis/python-api-common-protos/commit/3f7940226b0e22aef31b82c8dc2196aa25b48a3f))
+
 ## [1.53.0dev1](https://www.github.com/googleapis/python-api-common-protos/compare/v1.52.0...v1.53.0dev1) (2021-01-27)
 
 
