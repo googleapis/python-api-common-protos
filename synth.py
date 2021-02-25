@@ -23,7 +23,7 @@ from synthtool.sources import git
 API_COMMON_PROTOS_REPO = "googleapis/api-common-protos"
 GOOGLEAPIS_REPO = "googleapis/googleapis"
 # ----------------------------------------------------------------------------
-#  Get api-common-protos, googleapis
+#  Get api-common-protos
 # ----------------------------------------------------------------------------
 
 # Use api-common-protos as a proper synthtool git source
