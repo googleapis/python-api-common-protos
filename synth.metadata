@@ -26,14 +26,14 @@
       "git": {
         "name": "synthtool",
         "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "d2364eb80b840a36136c8ce12f1c6efabcc9600e"
+        "sha": "ffe10407ee2f261c799fb0d01bf32a8abc67ed1e"
       }
     },
     {
       "git": {
         "name": "synthtool",
         "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "d2364eb80b840a36136c8ce12f1c6efabcc9600e"
+        "sha": "ffe10407ee2f261c799fb0d01bf32a8abc67ed1e"
       }
     }
   ],
@@ -52,6 +52,23 @@
     ".kokoro/release.sh",
     ".kokoro/release/common.cfg",
     ".kokoro/release/release.cfg",
+    ".kokoro/samples/lint/common.cfg",
+    ".kokoro/samples/lint/continuous.cfg",
+    ".kokoro/samples/lint/periodic.cfg",
+    ".kokoro/samples/lint/presubmit.cfg",
+    ".kokoro/samples/python3.6/common.cfg",
+    ".kokoro/samples/python3.6/continuous.cfg",
+    ".kokoro/samples/python3.6/periodic.cfg",
+    ".kokoro/samples/python3.6/presubmit.cfg",
+    ".kokoro/samples/python3.7/common.cfg",
+    ".kokoro/samples/python3.7/continuous.cfg",
+    ".kokoro/samples/python3.7/periodic.cfg",
+    ".kokoro/samples/python3.7/presubmit.cfg",
+    ".kokoro/samples/python3.8/common.cfg",
+    ".kokoro/samples/python3.8/continuous.cfg",
+    ".kokoro/samples/python3.8/periodic.cfg",
+    ".kokoro/samples/python3.8/presubmit.cfg",
+    ".kokoro/test-samples.sh",
     ".kokoro/trampoline.sh",
     "LICENSE",
     "google/api/README.md",
