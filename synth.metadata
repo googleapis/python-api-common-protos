@@ -11,7 +11,7 @@
       "git": {
         "name": "api-common-protos",
         "remote": "https://github.com/googleapis/api-common-protos.git",
-        "sha": "c38ce7ea7ded7a79ca53024de96d154c3d8aad8c"
+        "sha": "ea6d25613b81dfa011ed3f4ddfda50eb206e7f25"
       }
     },
     {
