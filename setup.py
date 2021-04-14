@@ -40,7 +40,7 @@ packages = [
 
 setuptools.setup(
     name=name,
-    version=version,
+    version=setuptools.sic(version),
     author="Google LLC",
     author_email="googleapis-packages@google.com",
     classifiers=[
