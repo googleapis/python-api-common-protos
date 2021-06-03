@@ -62,11 +62,6 @@ class OperationsStub(object):
             request_serializer=google_dot_longrunning_dot_operations__pb2.CancelOperationRequest.SerializeToString,
             response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
-        self.WaitOperation = channel.unary_unary(
-            "/google.longrunning.Operations/WaitOperation",
-            request_serializer=google_dot_longrunning_dot_operations__pb2.WaitOperationRequest.SerializeToString,
-            response_deserializer=google_dot_longrunning_dot_operations__pb2.Operation.FromString,
-        )
 
 
 class OperationsServicer(object):
@@ -85,13 +80,8 @@ class OperationsServicer(object):
         """Lists operations that match the specified filter in the request. If the
         server doesn't support this method, it returns `UNIMPLEMENTED`.
 
-        NOTE: the `name` binding allows API services to override the binding
-        to use different resource name schemes, such as `users/*/operations`. To
-        override the binding, API services can add a binding such as
-        `"/v1/{name=users/*}/operations"` to their service configuration.
-        For backwards compatibility, the default name includes the operations
-        collection id, however overriding users must ensure the name binding
-        is the parent resource, without the operations collection id.
+        NOTE: the `name` binding below allows API services to override the binding
+        to use different resource name schemes, such as `users/*/operations`.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details("Method not implemented!")
@@ -132,21 +122,6 @@ class OperationsServicer(object):
         context.set_details("Method not implemented!")
         raise NotImplementedError("Method not implemented!")
 
-    def WaitOperation(self, request, context):
-        """Waits for the specified long-running operation until it is done or reaches
-        at most a specified timeout, returning the latest state.  If the operation
-        is already done, the latest state is immediately returned.  If the timeout
-        specified is greater than the default HTTP/RPC timeout, the HTTP/RPC
-        timeout is used.  If the server does not support this method, it returns
-        `google.rpc.Code.UNIMPLEMENTED`.
-        Note that this method is on a best-effort basis.  It may return the latest
-        state before the specified timeout (including immediately), meaning even an
-        immediate response is no guarantee that the operation is done.
-        """
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details("Method not implemented!")
-        raise NotImplementedError("Method not implemented!")
-
 
 def add_OperationsServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -169,11 +144,6 @@ def add_OperationsServicer_to_server(servicer, server):
             servicer.CancelOperation,
             request_deserializer=google_dot_longrunning_dot_operations__pb2.CancelOperationRequest.FromString,
             response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-        ),
-        "WaitOperation": grpc.unary_unary_rpc_method_handler(
-            servicer.WaitOperation,
-            request_deserializer=google_dot_longrunning_dot_operations__pb2.WaitOperationRequest.FromString,
-            response_serializer=google_dot_longrunning_dot_operations__pb2.Operation.SerializeToString,
         ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -301,35 +271,6 @@ class Operations(object):
             "/google.longrunning.Operations/CancelOperation",
             google_dot_longrunning_dot_operations__pb2.CancelOperationRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-        )
-
-    @staticmethod
-    def WaitOperation(
-        request,
-        target,
-        options=(),
-        channel_credentials=None,
-        call_credentials=None,
-        insecure=False,
-        compression=None,
-        wait_for_ready=None,
-        timeout=None,
-        metadata=None,
-    ):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            "/google.longrunning.Operations/WaitOperation",
-            google_dot_longrunning_dot_operations__pb2.WaitOperationRequest.SerializeToString,
-            google_dot_longrunning_dot_operations__pb2.Operation.FromString,
             options,
             channel_credentials,
             insecure,
