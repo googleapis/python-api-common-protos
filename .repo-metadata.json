@@ -1,7 +1,7 @@
 {
     "name": "googleapis-common-protos",
     "name_pretty": "Google APIs Common Protos",
-    "client_documentation": "https://cloud.google.com/python/docs/reference/googleapis-common-protos/latest",
+    "client_documentation": "https://github.com/googleapis/python-api-common-protos",
     "issue_tracker": "https://github.com/googleapis/python-api-common-protos/issues",
     "release_level": "stable",
     "language": "python",
