@@ -9,6 +9,5 @@
     "repo": "googleapis/python-api-common-protos",
     "distribution_name": "googleapis-common-protos",
     "default_version": "",
-    "codeowner_team": "",
-    "api_shortname": "googleapis-common-protos"
+    "codeowner_team": ""
 }
