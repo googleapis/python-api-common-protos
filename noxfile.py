@@ -55,7 +55,7 @@ def default(session):
 
     # Install googleapis-api-common-protos
     # This *must* be the last install command to get the package from source.
-    session.install("e", "..", "-c", constraints_path)
+    session.install("e", ".", "-c", constraints_path)
 
     # Run py.test against the unit tests.
     session.run(
@@ -72,6 +72,7 @@ def default(session):
     )
 
 
+@nox.session(python=["3.6", "3.7", "3.8", "3.9", "3.10"])
 def unit(session):
     """Run the unit test suite."""
     default(session)
