@@ -47,15 +47,15 @@ def default(session):
     session.install("asyncmock", "pytest-asyncio")
 
     session.install("mock", "pytest", "pytest-cov")
+    session.install("-e", ".")
 
     constraints_path = str(
         CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
     )
-    session.install("-e", ".")
 
     # Install googleapis-api-common-protos
     # This *must* be the last install command to get the package from source.
-    session.install("e", "..")
+    session.install("e", "..", "-c", constraints_path)
 
     # Run py.test against the unit tests.
     session.run(
@@ -71,9 +71,11 @@ def default(session):
         *session.posargs,
     )
 
+
 def unit(session):
     """Run the unit test suite."""
     default(session)
+
 
 def system(session):
     """Run the system test suite."""
@@ -113,7 +115,7 @@ def system(session):
         session.run("py.test", "--verbose", system_test_folder_path, *session.posargs)
 
 
-@nox.session(python=["3.6", "3.7", "3.8", "3.9", "3.10"])
+@nox.session(python=["3.6", "3.7", "3.8", "3.9"])
 @nox.parametrize(
     "library",
     ["python-pubsub", "python-texttospeech", "python-speech"],
@@ -158,7 +160,7 @@ def test(session, library):
 def generate_protos(session):
     """Generates the protos using protoc.
 
-    This session must be last to avoid overwriting the protos used in CI runs.
+    This session but be last to avoid overwriting the protos used in CI runs.
 
     Some notes on the `google` directory:
     1. The `_pb2.py` files are produced by protoc.
