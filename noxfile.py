@@ -51,11 +51,11 @@ def default(session):
     constraints_path = str(
         CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
     )
-    session.install("-e", ".", "-c", constraints_path)
+    session.install("-e", ".")
 
     # Install googleapis-api-common-protos
     # This *must* be the last install command to get the package from source.
-    session.install("e", "..", "-c", constraints_path)
+    session.install("e", "..")
 
     # Run py.test against the unit tests.
     session.run(
@@ -71,27 +71,9 @@ def default(session):
         *session.posargs,
     )
 
-@nox.session(python=["3.6", "3.7", "3.8", "3.9", "3.10"])
 def unit(session):
     """Run the unit test suite."""
-    session.install("mock", "pytest", "pytest-cov")
-    constraints_path = str(
-        CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
-    )
-    session.install("-e", ".", "-c", constraints_path)
-    # Run py.test against the unit tests.
-    session.run(
-        "py.test",
-        "--quiet",
-        "--cov=google",
-        "--cov=tests/unit",
-        "--cov-append",
-        "--cov-config=.coveragerc",
-        "--cov-report=",
-        "--cov-fail-under=0",
-        os.path.join("tests", "unit"),
-        *session.posargs,
-    )
+    default(session)
 
 def system(session):
     """Run the system test suite."""
