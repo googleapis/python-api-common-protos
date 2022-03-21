@@ -155,6 +155,41 @@ def test(session, library):
             session.install("psutil")
         system(session)
 
+@nox.session(python=["3.6", "3.7", "3.8", "3.9", "3.10"])
+def tests_local(session):
+    """Run tests in this local repo."""
+    # Install all test dependencies, then install this package in-place.
+
+    constraints_path = str(
+        CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
+    )
+    session.install(
+        "mock",
+        "asyncmock",
+        "pytest",
+        "pytest-cov",
+        "pytest-asyncio",
+        "-c",
+        constraints_path,
+    )
+
+    session.install("-e", ".", "-c", constraints_path)
+
+    # Run py.test against the unit tests.
+    session.run(
+        "py.test",
+        "--quiet",
+        f"--junitxml=unit_{session.python}_sponge_log.xml",
+        "--cov=google",
+        "--cov=tests/unit",
+        "--cov-append",
+        "--cov-config=.coveragerc",
+        "--cov-report=",
+        "--cov-fail-under=0",
+        os.path.join("tests", "unit"),
+        *session.posargs,
+    )
+
 
 @nox.session(python="3.8")
 def generate_protos(session):
