@@ -125,7 +125,10 @@ def system(session):
 @nox.session(python=["3.7", "3.8", "3.9", "3.10", "3.11"])
 @nox.parametrize(
     "library",
-    ["python-pubsub", "python-speech"],
+    [
+        ("python-pubsub", None)
+        ("google-cloud-python", "google-cloud-speech"),
+    ],
     ids=["pubsub", "speech"],
 )
 def test(session, library):
@@ -141,24 +144,26 @@ def test(session, library):
     * Text-to-Speech: Full GAPIC.
     * Speech: Full GAPIC, has long running operations.
     """
+    repository, package = library
     try:
-        session.run("git", "-C", library, "pull", external=True)
+        session.run("git", "-C", repository, "pull", external=True)
     except nox.command.CommandFailed:
         session.run(
             "git",
             "clone",
             "--single-branch",
-            f"https://github.com/googleapis/{library}",
+            f"https://github.com/googleapis/{repository}",
             external=True,
         )
 
-    session.cd(library)
-
+    session.cd(repository)
+    if package:
+        session.cd(f'packages/{package}')
     unit(session)
 
     # system tests are run on 3.7 only
     if session.python == "3.7":
-        if library == "python-pubsub":
+        if repository == "python-pubsub":
             session.install("psutil")
             session.install("flaky")
         system(session)
