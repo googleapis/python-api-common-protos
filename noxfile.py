@@ -126,7 +126,7 @@ def system(session):
 @nox.parametrize(
     "library",
     [
-        ("python-pubsub", None)
+        ("python-pubsub", None),
         ("google-cloud-python", "google-cloud-speech"),
     ],
     ids=["pubsub", "speech"],
