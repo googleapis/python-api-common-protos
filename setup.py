@@ -61,9 +61,7 @@ setuptools.setup(
     license="Apache-2.0",
     package_data={"": ["*.proto"]},
     python_requires=">=3.7",
-    packages=find_namespace_packages(
-        exclude=("tests*", "testing*")
-    ),
+    packages=find_namespace_packages(exclude=("tests*", "testing*")),
     url="https://github.com/googleapis/python-api-common-protos",
     include_package_data=True,
 )
