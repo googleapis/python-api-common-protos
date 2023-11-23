@@ -61,7 +61,7 @@ def default(session):
 
     # Install googleapis-api-common-protos
     # This *must* be the last install command to get the package from source.
-    session.install("-e", "..", "-c", constraints_path)
+    session.install("-e", ".", "-c", constraints_path)
 
     # Run py.test against the unit tests.
     session.run(
@@ -113,7 +113,7 @@ def system(session):
 
     # Install googleapis-api-common-protos
     # This *must* be the last install command to get the package from source.
-    session.install("-e", "..", "-c", constraints_path)
+    session.install("-e", ".", "-c", constraints_path)
 
     # Run py.test against the system tests.
     if system_test_exists:
@@ -159,6 +159,7 @@ def test(session, library):
     session.cd(repository)
     if package:
         session.cd(f'packages/{package}')
+
     unit(session)
 
     # system tests are run on 3.7 only
