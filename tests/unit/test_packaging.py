@@ -39,3 +39,14 @@ def test_namespace_package_compat(tmp_path):
     env = dict(os.environ, PYTHONPATH=str(tmp_path))
     cmd = [sys.executable, "-m", "google.cloud.othermod"]
     subprocess.check_call(cmd, env=env)
+
+    """
+    The ``google.logging`` namespace package should not be masked
+    by the presence of ``googleapis-common-protos``.
+    """
+    google_logging = tmp_path / "google/logging"
+    google_logging.mkdir()
+    google_logging.joinpath("othermod.py").write_text("")
+    env = dict(os.environ, PYTHONPATH=str(tmp_path))
+    cmd = [sys.executable, "-m", "google.logging.othermod"]
+    subprocess.check_call(cmd, env=env)
