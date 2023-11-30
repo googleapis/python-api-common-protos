@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.62.0](https://github.com/googleapis/python-api-common-protos/compare/v1.61.0...v1.62.0) (2023-11-30)
+## [1.62.0rc1](https://github.com/googleapis/python-api-common-protos/compare/v1.61.0...v1.62.0rc1) (2023-11-30)
 
 
 ### Features
