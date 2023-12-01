@@ -55,11 +55,13 @@ def default(session, repository=None):
     session.install("mock==5.0.0", "pytest", "pytest-cov")
     session.install("-e", ".")
 
-    if repository == "python-pubsub":
-        constraints_path = str(
-            CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}-{repository}.txt"
-        )
-    else:
+    # Use the repository specific constraints path if it exists
+    constraints_path = str(
+        CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}-{repository}.txt"
+    )
+
+    # If there is no repository specific constraints path, use the default one.
+    if not constraints_path:
         constraints_path = str(
             CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
         )
