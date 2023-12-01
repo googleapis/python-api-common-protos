@@ -61,7 +61,7 @@ def default(session, repository=None):
     )
 
     # If there is no repository specific constraints path, use the default one.
-    if not constraints_path:
+    if not Path(constraints_path).exists():
         constraints_path = str(
             CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
         )
