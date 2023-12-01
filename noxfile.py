@@ -90,7 +90,7 @@ def unit(session, repository=None):
     default(session, repository)
 
 
-def system(session):
+def system(session, repository=None):
     """Run the system test suite."""
     system_test_path = os.path.join("tests", "system.py")
     system_test_folder_path = os.path.join("tests", "system")
@@ -114,9 +114,17 @@ def system(session):
 
     session.install("-e", ".")
 
+    # Use the repository specific constraints path if it exists
     constraints_path = str(
-        CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
+        CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}-{repository}.txt"
     )
+
+    # If there is no repository specific constraints path, use the default one.
+    if not Path(constraints_path).exists():
+        constraints_path = str(
+            CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
+        )
+
 
     # Install googleapis-api-common-protos
     # This *must* be the last install command to get the package from source.
@@ -174,7 +182,7 @@ def test(session, library):
         if repository == "python-pubsub":
             session.install("psutil")
             session.install("flaky")
-        system(session)
+        system(session, repository)
 
 @nox.session(python=["3.7", "3.8", "3.9", "3.10", "3.11", "3.12"])
 def tests_local(session):
