@@ -47,7 +47,7 @@ def lint_setup_py(session):
     session.run("python", "setup.py", "check", "--strict")
 
 
-def default(session):
+def default(session, repository=None):
     # Install all test dependencies, then install this package in-place.
     session.install("asyncmock", "pytest-asyncio")
 
@@ -56,7 +56,7 @@ def default(session):
     session.install("-e", ".")
 
     constraints_path = str(
-        CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
+        CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}-{repository}.txt"
     )
 
     # Install googleapis-api-common-protos
@@ -78,9 +78,9 @@ def default(session):
     )
 
 
-def unit(session):
+def unit(session, repository=None):
     """Run the unit test suite."""
-    default(session)
+    default(session, repository)
 
 
 def system(session):
@@ -160,7 +160,7 @@ def test(session, library):
     if package:
         session.cd(f'packages/{package}')
 
-    unit(session)
+    unit(session, repository)
 
     # system tests are run on 3.7 only
     if session.python == "3.7":
