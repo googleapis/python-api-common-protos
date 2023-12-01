@@ -55,9 +55,14 @@ def default(session, repository=None):
     session.install("mock==5.0.0", "pytest", "pytest-cov")
     session.install("-e", ".")
 
-    constraints_path = str(
-        CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}-{repository}.txt"
-    )
+    if repository == "python-pubsub":
+        constraints_path = str(
+            CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}-{repository}.txt"
+        )
+    else:
+        constraints_path = str(
+            CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
+        )
 
     # Install googleapis-api-common-protos
     # This *must* be the last install command to get the package from source.
