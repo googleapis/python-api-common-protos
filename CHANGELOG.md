@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.63.1](https://github.com/googleapis/python-api-common-protos/compare/v1.63.0...v1.63.1) (2024-04-07)
+
+
+### Documentation
+
+* Fix docs session ([#214](https://github.com/googleapis/python-api-common-protos/issues/214)) ([622dbb7](https://github.com/googleapis/python-api-common-protos/commit/622dbb7d532edaad589dacb5975c8c3c62cb8717))
+
 ## [1.63.0](https://github.com/googleapis/python-api-common-protos/compare/v1.62.0...v1.63.0) (2024-03-08)
 
 
