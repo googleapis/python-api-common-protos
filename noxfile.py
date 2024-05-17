@@ -15,8 +15,8 @@
 import os
 import pathlib
 from pathlib import Path
-import pytest
 import re
+import unittest
 
 import nox
 
@@ -188,7 +188,7 @@ def test(session, library, prerelease):
     * Speech: Full GAPIC, has long running operations.
     """
     if prerelease and session.python != UNIT_TEST_PYTHON_VERSIONS[-1]:
-        pytest.skip("Prerelease test is only run using the latest python runtime")
+        unittest.skip("Prerelease test is only run using the latest python runtime")
 
     repository, package = library
     try:
