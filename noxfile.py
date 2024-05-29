@@ -213,7 +213,7 @@ def test(session, library, prerelease):
         if repository == "python-pubsub":
             session.install("psutil")
             session.install("flaky")
-        system(session, repository, package, prerelease)
+        system(session)
 
 
 @nox.session(python=UNIT_TEST_PYTHON_VERSIONS)
