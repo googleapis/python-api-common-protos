@@ -211,6 +211,7 @@ def test(session, library, prerelease):
     # system tests are run on 3.7 only
     if session.python == "3.7":
         if repository == "python-pubsub":
+            session.install("google-cloud-testutils")
             session.install("psutil")
             session.install("flaky")
         system(session)
