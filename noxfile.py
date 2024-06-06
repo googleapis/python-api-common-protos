@@ -16,7 +16,6 @@ import os
 import pathlib
 from pathlib import Path
 import re
-import unittest
 
 import nox
 
@@ -190,12 +189,16 @@ def system(session, protobuf_implementation):
     [
         (("python-pubsub", None), False, "python"),
         (("python-pubsub", None), False, "upb"),
+        (("python-pubsub", None), False, "cpp"),
         (("python-pubsub", None), True, "python"),
         (("python-pubsub", None), True, "upb"),
+        (("python-pubsub", None), True, "cpp"),
         (("google-cloud-python", "google-cloud-speech"), False, "python"),
+        (("google-cloud-python", "google-cloud-speech"), False, "upb"),
+        (("google-cloud-python", "google-cloud-speech"), False, "cpp"),
+        (("google-cloud-python", "google-cloud-speech"), True, "python"),
         (("google-cloud-python", "google-cloud-speech"), True, "upb"),
-        (("google-cloud-python", "google-cloud-speech"), False, "python"),
-        (("google-cloud-python", "google-cloud-speech"), True, "upb"),
+        (("google-cloud-python", "google-cloud-speech"), True, "cpp"),
     ],
     ids=["pubsub", "speech"],
 )
@@ -212,7 +215,10 @@ def test(session, library, prerelease, protobuf_implementation):
     * Speech: Full GAPIC, has long running operations.
     """
     if prerelease and session.python != UNIT_TEST_PYTHON_VERSIONS[-1]:
-        unittest.skip("Prerelease test is only run using the latest python runtime")
+        session.skip("Prerelease test is only run using the latest python runtime")
+
+    if protobuf_implementation == "cpp" and session.python in ("3.11", "3.12"):
+        session.skip("cpp implementation is not supported in python 3.11+")
 
     repository, package = library
     try:
@@ -242,10 +248,18 @@ def test(session, library, prerelease, protobuf_implementation):
 
 
 @nox.session(python=UNIT_TEST_PYTHON_VERSIONS)
-@nox.parametrize("protobuf_implementation", ["python", "upb"])
+@nox.parametrize("protobuf_implementation", ["python", "upb", "cpp"])
 def tests_local(session, protobuf_implementation):
     """Run tests in this local repo."""
     # Install all test dependencies, then install this package in-place.
+
+    # TODO(https://github.com/googleapis/proto-plus-python/issues/389):
+    # Remove the 'cpp' implementation once support for Protobuf 3.x is dropped.
+    # The 'cpp' implementation requires Protobuf == 3.x however version 3.x
+    # does not support Python 3.11 and newer. The 'cpp' implementation
+    # must be excluded from the test matrix for these runtimes.
+    if protobuf_implementation == "cpp" and session.python in ("3.11", "3.12"):
+        session.skip("cpp implementation is not supported in python 3.11+")
 
     constraints_path = str(
         CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
