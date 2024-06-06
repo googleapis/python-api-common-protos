@@ -21,6 +21,7 @@ import nox
 
 BLACK_VERSION = "black==22.3.0"
 
+# `grpcio-tools` 1.59.0 or newer is required for protobuf 5.x compatibility.
 GRPCIO_TOOLS_VERSION = "grpcio-tools==1.59.0"
 
 CURRENT_DIRECTORY = pathlib.Path(__file__).parent.absolute()
