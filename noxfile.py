@@ -76,10 +76,8 @@ def unit(session, repository, package, prerelease, protobuf_implementation):
             ["-c", f"{downstream_parent_dir}/testing/constraints-{session.python}.txt"]
         )
 
-    # This *must* be the last install command to get the package from source.
+    # These *must* be the last 2 install commands to get the packages from source.
     session.install(*install_command)
-
-    # Install the googleapis-common-protos library from source
     session.install(".", "--no-deps")
 
     # Print out package versions of dependencies
