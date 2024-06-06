@@ -21,55 +21,11 @@ import synthtool.gcp as gcp
 from synthtool.languages import python
 from synthtool.sources import git
 
-GOOGLEAPIS_REPO = "googleapis/googleapis"
 
-# ----------------------------------------------------------------------------
-#  Get gapic metadata proto from googleapis
-# ----------------------------------------------------------------------------
+for library in s.get_staging_dirs():
+    s.move([library])
+s.remove_staging_dirs()
 
-# Clean up googleapis
-shutil.rmtree('googleapis', ignore_errors=True)
-
-# Clone googleapis
-googleapis_url = git.make_repo_clone_url(GOOGLEAPIS_REPO)
-subprocess.run(["git", "clone", googleapis_url])
-
-# This is required in order for s.copy() to work
-s._tracked_paths.add("googleapis")
-
-# Gapic metadata proto needed by gapic-generator-python
-# Desired import is "from google.gapic.metadata import gapic_metadata_pb2"
-s.copy("googleapis/gapic", "google/gapic", excludes=["lang/", "packaging/", "**/BUILD.bazel"],)
-
-s.copy("googleapis/google/api/*.proto", "google/api")
-s.copy("googleapis/google/cloud/extended_operations.proto", "google/cloud")
-s.copy("googleapis/google/cloud/location/locations.proto", "google/cloud/location")
-s.copy("googleapis/google/logging/type/*.proto", "google/logging/type")
-s.copy("googleapis/google/longrunning/*.proto", "google/longrunning")
-s.copy("googleapis/google/rpc/*.proto", "google/rpc")
-s.copy("googleapis/google/rpc/context/*.proto", "google/rpc/context")
-s.copy("googleapis/google/type/*.proto", "google/type")
-
-# Clean up googleapis
-shutil.rmtree('googleapis')
-
-# ----------------------------------------------------------------------------
-#  Add templated files
-# ----------------------------------------------------------------------------
-common = gcp.CommonTemplates()
-templated_files = common.py_library()
-# TODO: use protoc-docs-plugin to add docstrings to protos
-s.move(templated_files / ".kokoro", excludes=["docs/**/*", "publish-docs.sh"])
-s.move(templated_files / "setup.cfg")
-s.move(templated_files / "LICENSE")
-s.move(templated_files / "MANIFEST.in")
-s.move(templated_files / "renovate.json")
-s.move(templated_files / ".github", excludes=["workflows"])
-
-# Generate _pb2.py files and format them
-s.shell.run(["nox", "-s", "generate_protos"], hide_output=False)
-
-s.shell.run(["nox", "-s", "blacken"], hide_output=False)
 
 # Add license headers
 python.fix_pb2_headers()
@@ -97,3 +53,18 @@ s.replace(
     PB2_GRPC_HEADER,
     fr"{LICENSE}\n\n\g<1>\n\n\g<2>",  # add line breaks to avoid stacking replacements
 )
+
+# ----------------------------------------------------------------------------
+#  Add templated files
+# ----------------------------------------------------------------------------
+common = gcp.CommonTemplates()
+templated_files = common.py_library()
+# TODO: use protoc-docs-plugin to add docstrings to protos
+s.move(templated_files / ".kokoro", excludes=["docs/**/*", "publish-docs.sh"])
+s.move(templated_files / "setup.cfg")
+s.move(templated_files / "LICENSE")
+s.move(templated_files / "MANIFEST.in")
+s.move(templated_files / "renovate.json")
+s.move(templated_files / ".github", excludes=["workflows"])
+
+s.shell.run(["nox", "-s", "blacken"], hide_output=False)

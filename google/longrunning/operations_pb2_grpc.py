@@ -1,4 +1,3 @@
-
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,8 +17,8 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from google.longrunning import (
-    operations_proto_pb2 as google_dot_longrunning_dot_operations__pb2,
+from google.cloud.cloud_longrunning.proto import (
+    operations_pb2 as google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2,
 )
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
@@ -44,28 +43,28 @@ class OperationsStub(object):
         """
         self.ListOperations = channel.unary_unary(
             "/google.longrunning.Operations/ListOperations",
-            request_serializer=google_dot_longrunning_dot_operations__pb2.ListOperationsRequest.SerializeToString,
-            response_deserializer=google_dot_longrunning_dot_operations__pb2.ListOperationsResponse.FromString,
+            request_serializer=google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.ListOperationsRequest.SerializeToString,
+            response_deserializer=google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.ListOperationsResponse.FromString,
         )
         self.GetOperation = channel.unary_unary(
             "/google.longrunning.Operations/GetOperation",
-            request_serializer=google_dot_longrunning_dot_operations__pb2.GetOperationRequest.SerializeToString,
-            response_deserializer=google_dot_longrunning_dot_operations__pb2.Operation.FromString,
+            request_serializer=google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.GetOperationRequest.SerializeToString,
+            response_deserializer=google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.Operation.FromString,
         )
         self.DeleteOperation = channel.unary_unary(
             "/google.longrunning.Operations/DeleteOperation",
-            request_serializer=google_dot_longrunning_dot_operations__pb2.DeleteOperationRequest.SerializeToString,
+            request_serializer=google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.DeleteOperationRequest.SerializeToString,
             response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
         self.CancelOperation = channel.unary_unary(
             "/google.longrunning.Operations/CancelOperation",
-            request_serializer=google_dot_longrunning_dot_operations__pb2.CancelOperationRequest.SerializeToString,
+            request_serializer=google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.CancelOperationRequest.SerializeToString,
             response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
         self.WaitOperation = channel.unary_unary(
             "/google.longrunning.Operations/WaitOperation",
-            request_serializer=google_dot_longrunning_dot_operations__pb2.WaitOperationRequest.SerializeToString,
-            response_deserializer=google_dot_longrunning_dot_operations__pb2.Operation.FromString,
+            request_serializer=google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.WaitOperationRequest.SerializeToString,
+            response_deserializer=google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.Operation.FromString,
         )
 
 
@@ -152,28 +151,28 @@ def add_OperationsServicer_to_server(servicer, server):
     rpc_method_handlers = {
         "ListOperations": grpc.unary_unary_rpc_method_handler(
             servicer.ListOperations,
-            request_deserializer=google_dot_longrunning_dot_operations__pb2.ListOperationsRequest.FromString,
-            response_serializer=google_dot_longrunning_dot_operations__pb2.ListOperationsResponse.SerializeToString,
+            request_deserializer=google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.ListOperationsRequest.FromString,
+            response_serializer=google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.ListOperationsResponse.SerializeToString,
         ),
         "GetOperation": grpc.unary_unary_rpc_method_handler(
             servicer.GetOperation,
-            request_deserializer=google_dot_longrunning_dot_operations__pb2.GetOperationRequest.FromString,
-            response_serializer=google_dot_longrunning_dot_operations__pb2.Operation.SerializeToString,
+            request_deserializer=google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.GetOperationRequest.FromString,
+            response_serializer=google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.Operation.SerializeToString,
         ),
         "DeleteOperation": grpc.unary_unary_rpc_method_handler(
             servicer.DeleteOperation,
-            request_deserializer=google_dot_longrunning_dot_operations__pb2.DeleteOperationRequest.FromString,
+            request_deserializer=google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.DeleteOperationRequest.FromString,
             response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
         ),
         "CancelOperation": grpc.unary_unary_rpc_method_handler(
             servicer.CancelOperation,
-            request_deserializer=google_dot_longrunning_dot_operations__pb2.CancelOperationRequest.FromString,
+            request_deserializer=google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.CancelOperationRequest.FromString,
             response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
         ),
         "WaitOperation": grpc.unary_unary_rpc_method_handler(
             servicer.WaitOperation,
-            request_deserializer=google_dot_longrunning_dot_operations__pb2.WaitOperationRequest.FromString,
-            response_serializer=google_dot_longrunning_dot_operations__pb2.Operation.SerializeToString,
+            request_deserializer=google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.WaitOperationRequest.FromString,
+            response_serializer=google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.Operation.SerializeToString,
         ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -212,8 +211,8 @@ class Operations(object):
             request,
             target,
             "/google.longrunning.Operations/ListOperations",
-            google_dot_longrunning_dot_operations__pb2.ListOperationsRequest.SerializeToString,
-            google_dot_longrunning_dot_operations__pb2.ListOperationsResponse.FromString,
+            google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.ListOperationsRequest.SerializeToString,
+            google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.ListOperationsResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -241,8 +240,8 @@ class Operations(object):
             request,
             target,
             "/google.longrunning.Operations/GetOperation",
-            google_dot_longrunning_dot_operations__pb2.GetOperationRequest.SerializeToString,
-            google_dot_longrunning_dot_operations__pb2.Operation.FromString,
+            google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.GetOperationRequest.SerializeToString,
+            google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.Operation.FromString,
             options,
             channel_credentials,
             insecure,
@@ -270,7 +269,7 @@ class Operations(object):
             request,
             target,
             "/google.longrunning.Operations/DeleteOperation",
-            google_dot_longrunning_dot_operations__pb2.DeleteOperationRequest.SerializeToString,
+            google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.DeleteOperationRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options,
             channel_credentials,
@@ -299,7 +298,7 @@ class Operations(object):
             request,
             target,
             "/google.longrunning.Operations/CancelOperation",
-            google_dot_longrunning_dot_operations__pb2.CancelOperationRequest.SerializeToString,
+            google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.CancelOperationRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options,
             channel_credentials,
@@ -328,8 +327,8 @@ class Operations(object):
             request,
             target,
             "/google.longrunning.Operations/WaitOperation",
-            google_dot_longrunning_dot_operations__pb2.WaitOperationRequest.SerializeToString,
-            google_dot_longrunning_dot_operations__pb2.Operation.FromString,
+            google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.WaitOperationRequest.SerializeToString,
+            google_dot_cloud_dot_cloud__longrunning_dot_proto_dot_operations__pb2.Operation.FromString,
             options,
             channel_credentials,
             insecure,

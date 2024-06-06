@@ -22,12 +22,6 @@ import nox
 
 BLACK_VERSION = "black==22.3.0"
 
-# NOTE: Pin the version of grpcio-tools to 1.48.2 for compatibility with
-# Protobuf 3.19.5. Please ensure that the minimum required version of
-# protobuf in setup.py is compatible with the pb2 files generated
-# by grpcio-tools before changing the pinned version below.
-GRPCIO_TOOLS_VERSION = "grpcio-tools==1.48.2"
-
 CURRENT_DIRECTORY = pathlib.Path(__file__).parent.absolute()
 UNIT_TEST_PYTHON_VERSIONS = ["3.7", "3.8", "3.9", "3.10", "3.11", "3.12"]
 
@@ -51,6 +45,7 @@ def lint_setup_py(session):
     session.run("python", "setup.py", "check", "--strict")
 
 
+# TODO : Test different protobuf implementations
 def unit(session, repository=None, package=None, prerelease=False):
     """Run the unit test suite."""
     # Install all test dependencies, then install this package in-place.
@@ -83,6 +78,9 @@ def unit(session, repository=None, package=None, prerelease=False):
     # This *must* be the last install command to get the package from source.
     session.install(*install_command)
 
+    # Install the googleapis-common-protos library from source
+    session.install(".", "--no-deps")
+
     # Print out package versions of dependencies
     session.run(
         "python", "-c", "import google.protobuf; print(google.protobuf.__version__)"
@@ -106,6 +104,10 @@ def unit(session, repository=None, package=None, prerelease=False):
         "--cov-fail-under=0",
         os.path.join("tests", "unit"),
         *session.posargs,
+        # TODO : Test different implementations
+        env={
+            "PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION": "python",
+        },
     )
 
 
@@ -142,7 +144,7 @@ def install_prerelease_dependencies(session, constraints_path):
         ]
         session.install(*other_deps)
 
-
+# TODO : Test different protobuf implementations
 def system(session):
     """Run the system test suite."""
     system_test_path = os.path.join("tests", "system.py")
@@ -158,10 +160,30 @@ def system(session):
         session.skip("System tests were not found")
 
     # Run py.test against the system tests.
+    # TODO : Test different protobuf implementations
     if system_test_exists:
-        session.run("py.test", "--verbose", system_test_path, *session.posargs)
+        session.run(
+            "py.test",
+            "--verbose",
+            system_test_path,
+            *session.posargs,
+            env={
+                "PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION": "python",
+            },
+    )
+
+    # Run py.test against the system tests.
+    # TODO : Test different protobuf implementations
     if system_test_folder_exists:
-        session.run("py.test", "--verbose", system_test_folder_path, *session.posargs)
+        session.run(
+            "py.test",
+            "--verbose",
+            system_test_folder_path,
+            *session.posargs,
+            env={
+                "PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION": "python",
+            },
+        )
 
 
 @nox.session(python=UNIT_TEST_PYTHON_VERSIONS)
@@ -217,6 +239,7 @@ def test(session, library, prerelease):
         system(session)
 
 
+# TODO : Test different protobuf implementations
 @nox.session(python=UNIT_TEST_PYTHON_VERSIONS)
 def tests_local(session):
     """Run tests in this local repo."""
@@ -250,60 +273,8 @@ def tests_local(session):
         "--cov-fail-under=0",
         os.path.join("tests", "unit"),
         *session.posargs,
-    )
-
-
-@nox.session(python="3.8")
-def generate_protos(session):
-    """Generates the protos using protoc.
-
-    This session but be last to avoid overwriting the protos used in CI runs.
-
-    Some notes on the `google` directory:
-    1. The `_pb2.py` files are produced by protoc.
-    2. The .proto files are non-functional but are left in the repository
-       to make it easier to understand diffs.
-    3. The `google` directory also has `__init__.py` files to create proper modules.
-       If a new subdirectory is added, you will need to create more `__init__.py`
-       files.
-    """
-    # longrunning operations directory is non-standard for backwards compatibility
-    # see comments in directory for details
-    # Temporarily rename the operations_pb2.py to keep it from getting overwritten
-    os.replace(
-        "google/longrunning/operations_pb2.py",
-        "google/longrunning/operations_pb2-COPY.py",
-    )
-
-    session.install(GRPCIO_TOOLS_VERSION)
-    protos = [str(p) for p in (Path(".").glob("google/**/*.proto"))]
-    session.run(
-        "python", "-m", "grpc_tools.protoc", "--proto_path=.", "--python_out=.", *protos
-    )
-
-    # Some files contain service definitions for which `_pb2_grpc.py` files must be generated.
-    service_protos = ["google/longrunning/operations.proto"]
-    session.run(
-        "python",
-        "-m",
-        "grpc_tools.protoc",
-        "--proto_path=.",
-        "--grpc_python_out=.",
-        *service_protos,
-    )
-
-    # More LRO non-standard fixes: rename the file and fix the import statement
-    operations_grpc_py = Path("google/longrunning/operations_pb2_grpc.py")
-    file_contents = operations_grpc_py.read_text()
-    file_contents = file_contents.replace("operations_pb2", "operations_proto_pb2")
-    operations_grpc_py.write_text(file_contents)
-
-    # Clean up LRO directory
-    os.replace(
-        "google/longrunning/operations_pb2.py",
-        "google/longrunning/operations_proto_pb2.py",
-    )
-    os.replace(
-        "google/longrunning/operations_pb2-COPY.py",
-        "google/longrunning/operations_pb2.py",
+        # TODO : Test different implementations
+        env={
+            "PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION": "python",
+        },
     )
