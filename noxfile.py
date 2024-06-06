@@ -22,7 +22,7 @@ import nox
 
 BLACK_VERSION = "black==22.3.0"
 
-GRPCIO_TOOLS_VERSION = "grpcio-tools==1.60.0"
+GRPCIO_TOOLS_VERSION = "grpcio-tools==1.59.0"
 
 CURRENT_DIRECTORY = pathlib.Path(__file__).parent.absolute()
 UNIT_TEST_PYTHON_VERSIONS = ["3.7", "3.8", "3.9", "3.10", "3.11", "3.12"]
