@@ -76,8 +76,14 @@ def unit(session, repository, package, prerelease, protobuf_implementation):
             ["-c", f"{downstream_parent_dir}/testing/constraints-{session.python}.txt"]
         )
 
-    # These *must* be the last 2 install commands to get the packages from source.
+    # These *must* be the last 3 install commands to get the packages from source.
     session.install(*install_command)
+
+    # Remove the 'cpp' implementation once support for Protobuf 3.x is dropped.
+    # The 'cpp' implementation requires Protobuf<4.
+    if protobuf_implementation == "cpp":
+        session.install("protobuf<4")
+
     session.install(".", "--no-deps")
 
     # Print out package versions of dependencies
@@ -274,6 +280,11 @@ def tests_local(session, protobuf_implementation):
     )
 
     session.install("-e", ".", "-c", constraints_path)
+
+    # Remove the 'cpp' implementation once support for Protobuf 3.x is dropped.
+    # The 'cpp' implementation requires Protobuf<4.
+    if protobuf_implementation == "cpp":
+        session.install("protobuf<4")
 
     # Run py.test against the unit tests.
     session.run(
