@@ -48,7 +48,7 @@ def lint_setup_py(session):
     session.run("python", "setup.py", "check", "--strict")
 
 
-def unit(session, repository, package, prerelease, protobuf_implementation):
+def unit(session, repository, package, prerelease, protobuf_implementation, working_dir):
     """Run the unit test suite."""
 
     downstream_dir = repository
@@ -61,12 +61,11 @@ def unit(session, repository, package, prerelease, protobuf_implementation):
     # Pin mock due to https://github.com/googleapis/python-pubsub/issues/840
     session.install("mock==5.0.0", "pytest", "pytest-cov")
 
-    install_command = ["-e", f"{CURRENT_DIRECTORY}/{downstream_dir}"]
-
+    install_command = ["-e", f"{working_dir}/{downstream_dir}"]
     if prerelease:
         install_prerelease_dependencies(
             session,
-            f"{CURRENT_DIRECTORY}/{downstream_dir}/testing/constraints-{UNIT_TEST_PYTHON_VERSIONS[0]}.txt",
+            f"{working_dir}/{downstream_dir}/testing/constraints-{UNIT_TEST_PYTHON_VERSIONS[0]}.txt",
         )
         # Use the `--no-deps` options to allow pre-release versions of dependencies to be installed
         install_command.extend(["--no-deps"])
@@ -75,7 +74,7 @@ def unit(session, repository, package, prerelease, protobuf_implementation):
         install_command.extend(
             [
                 "-c",
-                f"testing/constraints-{UNIT_TEST_PYTHON_VERSIONS[0]}-{repository}.txt",
+                f"{CURRENT_DIRECTORY}/testing/constraints-{UNIT_TEST_PYTHON_VERSIONS[0]}-{repository}.txt",
             ]
         )
 
@@ -102,7 +101,7 @@ def unit(session, repository, package, prerelease, protobuf_implementation):
     )
 
     # Run py.test against the unit tests in the downstream repository
-    with session.chdir(downstream_dir):
+    with session.chdir(f"{working_dir}/{downstream_dir}"):
         session.run(
             "py.test",
             "--quiet",
@@ -191,13 +190,13 @@ def test(session, library, prerelease, protobuf_implementation):
         session.skip("cpp implementation is not supported in python 3.11+")
 
     repository, package = library
-    with tempfile.TemporaryDirectory() as tmp_dir:
+    with tempfile.TemporaryDirectory() as working_dir:
         session.run(
             "git",
             "clone",
             "--single-branch",
             f"https://github.com/googleapis/{repository}",
-            tmp_dir,
+            f"{working_dir}/{repository}",
             external=True,
         )
 
@@ -207,6 +206,7 @@ def test(session, library, prerelease, protobuf_implementation):
             package=package,
             prerelease=prerelease,
             protobuf_implementation=protobuf_implementation,
+            working_dir=working_dir
         )
 
 
