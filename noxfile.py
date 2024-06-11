@@ -16,6 +16,7 @@ import os
 import pathlib
 from pathlib import Path
 import re
+import tempfile
 
 import nox
 
@@ -190,24 +191,23 @@ def test(session, library, prerelease, protobuf_implementation):
         session.skip("cpp implementation is not supported in python 3.11+")
 
     repository, package = library
-    try:
-        session.run("git", "-C", repository, "pull", external=True)
-    except nox.command.CommandFailed:
+    with tempfile.TemporaryDirectory() as tmp_dir:
         session.run(
             "git",
             "clone",
             "--single-branch",
             f"https://github.com/googleapis/{repository}",
+            tmp_dir,
             external=True,
         )
 
-    unit(
-        session=session,
-        repository=repository,
-        package=package,
-        prerelease=prerelease,
-        protobuf_implementation=protobuf_implementation,
-    )
+        unit(
+            session=session,
+            repository=repository,
+            package=package,
+            prerelease=prerelease,
+            protobuf_implementation=protobuf_implementation,
+        )
 
 
 @nox.session(python=UNIT_TEST_PYTHON_VERSIONS)
