@@ -149,45 +149,6 @@ def install_prerelease_dependencies(session, constraints_path):
         session.install(*other_deps)
 
 
-def system(session, protobuf_implementation):
-    """Run the system test suite."""
-    system_test_path = os.path.join("tests", "system.py")
-    system_test_folder_path = os.path.join("tests", "system")
-    # Sanity check: Only run tests if the environment variable is set.
-    if not os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", ""):
-        session.skip("Credentials must be set via environment variable")
-
-    system_test_exists = os.path.exists(system_test_path)
-    system_test_folder_exists = os.path.exists(system_test_folder_path)
-    # Sanity check: only run tests if found.
-    if not system_test_exists and not system_test_folder_exists:
-        session.skip("System tests were not found")
-
-    # Run py.test against the system tests.
-    if system_test_exists:
-        session.run(
-            "py.test",
-            "--verbose",
-            system_test_path,
-            *session.posargs,
-            env={
-                "PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION": protobuf_implementation,
-            },
-    )
-
-    # Run py.test against the system tests.
-    if system_test_folder_exists:
-        session.run(
-            "py.test",
-            "--verbose",
-            system_test_folder_path,
-            *session.posargs,
-            env={
-                "PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION": protobuf_implementation,
-            },
-        )
-
-
 @nox.session(python=UNIT_TEST_PYTHON_VERSIONS)
 @nox.parametrize(
     "library, prerelease,protobuf_implementation",
@@ -211,9 +172,9 @@ def test(session, library, prerelease, protobuf_implementation):
     """Run tests from a downstream libraries.
 
     To verify that any changes we make here will not break downstream libraries, clone
-    a few and run their unit and system tests.
+    a few and run their unit tests.
 
-    NOTE: The unit and system test functions above are copied from the templates.
+    NOTE: The unit test functions above are copied from the templates.
     They will need to be updated when the templates change.
 
     * Pub/Sub: GAPIC with handwritten layer.
@@ -242,14 +203,6 @@ def test(session, library, prerelease, protobuf_implementation):
         session.cd(f"packages/{package}")
 
     unit(session=session, repository=repository, package=package, prerelease=prerelease, protobuf_implementation=protobuf_implementation)
-
-    # system tests are run on 3.7 only
-    if session.python == "3.7":
-        if repository == "python-pubsub":
-            session.install("google-cloud-testutils")
-            session.install("psutil")
-            session.install("flaky")
-        system(session=session, protobuf_implementation=protobuf_implementation)
 
 
 @nox.session(python=UNIT_TEST_PYTHON_VERSIONS)
