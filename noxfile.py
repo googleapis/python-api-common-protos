@@ -74,7 +74,7 @@ def unit(session, repository, package, prerelease, protobuf_implementation):
         install_command.extend(
             [
                 "-c",
-                f"{CURRENT_DIRECTORY}/{downstream_dir}/testing/constraints-{session.python}.txt",
+                f"testing/constraints-{UNIT_TEST_PYTHON_VERSIONS[0]}-{repository}.txt",
             ]
         )
 
@@ -155,7 +155,7 @@ def install_prerelease_dependencies(session, constraints_path):
 
 @nox.session(python=UNIT_TEST_PYTHON_VERSIONS)
 @nox.parametrize(
-    "library, prerelease,protobuf_implementation",
+    "library,prerelease,protobuf_implementation",
     [
         (("python-pubsub", None), False, "python"),
         (("python-pubsub", None), False, "upb"),
@@ -170,7 +170,6 @@ def install_prerelease_dependencies(session, constraints_path):
         (("google-cloud-python", "google-cloud-speech"), True, "upb"),
         (("google-cloud-python", "google-cloud-speech"), True, "cpp"),
     ],
-    ids=["pubsub", "speech"],
 )
 def test(session, library, prerelease, protobuf_implementation):
     """Run tests from a downstream libraries.
