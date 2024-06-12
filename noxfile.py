@@ -70,13 +70,11 @@ def unit(session, repository, package, prerelease, protobuf_implementation, work
         # Use the `--no-deps` options to allow pre-release versions of dependencies to be installed
         install_command.extend(["--no-deps"])
     else:
-        # Install the pinned dependencies in constraints file
-        install_command.extend(
-            [
-                "-c",
-                f"{CURRENT_DIRECTORY}/testing/constraints-{UNIT_TEST_PYTHON_VERSIONS[0]}-{repository}.txt",
-            ]
-        )
+        contraints_file = f"{CURRENT_DIRECTORY}/testing/constraints-{session.python}-{repository}.txt"
+        if not Path(contraints_file).exists():
+            contraints_file = f"{CURRENT_DIRECTORY}/testing/constraints-{session.python}.txt"
+
+        install_command.extend(["-c", contraints_file])
 
     # These *must* be the last 3 install commands to get the packages from source.
     session.install(*install_command)
