@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.63.2](https://github.com/googleapis/python-api-common-protos/compare/v1.63.1...v1.63.2) (2024-06-19)
+## [1.63.2rc0](https://github.com/googleapis/python-api-common-protos/compare/v1.63.1...v1.63.2rc0) (2024-06-19)
 
 
 ### Bug Fixes
