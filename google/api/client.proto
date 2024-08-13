@@ -265,6 +265,10 @@ message PhpSettings {
 message PythonSettings {
   // Some settings.
   CommonLanguageSettings common = 1;
+
+  // List of optional features to be included during client library
+  // generation.
+  repeated string optional_features = 2;
 }
 
 // Settings for Node client libraries.
