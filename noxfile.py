@@ -64,15 +64,14 @@ def unit(session, repository, package, prerelease, protobuf_implementation, work
     # Pin mock due to https://github.com/googleapis/python-pubsub/issues/840
     session.install("mock==5.0.0", "pytest", "pytest-cov")
 
-    session.install("-e", f"{working_dir}/{downstream_dir}")
-
-    install_command = ["-e", f"{working_dir}/{downstream_dir}"]
     if prerelease:
+        session.install("-e", f"{working_dir}/{downstream_dir}")
         install_prerelease_dependencies(
             session,
             f"{working_dir}/{downstream_dir}/testing/constraints-{UNIT_TEST_PYTHON_VERSIONS[0]}.txt",
         )
     else:
+        install_command = ["-e", f"{working_dir}/{downstream_dir}"]
         contraints_file = f"{CURRENT_DIRECTORY}/testing/constraints-{session.python}-{repository}.txt"
         if not Path(contraints_file).exists():
             contraints_file = f"{CURRENT_DIRECTORY}/testing/constraints-{session.python}.txt"
